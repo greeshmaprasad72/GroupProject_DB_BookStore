@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore Template - Customer Orders</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="header">
+            <div class="header-logo"></div>
+            <div>Bookstore Template</div>
+        </div>
+        
+        <div class="menu-item">
+            <div class="menu-icon">👤</div>
+            <div>Customers</div>
+        </div>
+        
+      
+        
+        <div class="menu-item active">
+            <div class="menu-icon">📋</div>
+            <div>Customer Orders</div>
+        </div>
+        
+       
+        
+        <div class="menu-item">
+            <div class="menu-icon">📦</div>
+            <div>Book Details</div>
+        </div>
+        
+       
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="info-banner">
+           <h1>Welcome To BookStore</h1>
+        </div>
+        
+        <div class="content-header">
+            <div class="content-title">Customer Orders</div>
+            
+            <div style="display: flex; gap: 16px;">
+            <button class="add-button" onclick="openModal()">
+                    <span class="add-icon">+</span>
+                    Add
+                </button>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>BOOK</th>
+                    <th>QTY</th>
+                    <th>PRICE</th>
+                    <th>DATE</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fatima Delgadillo</td>
+                    <td>The Great Gatsby</td>
+                    <td>2</td>
+                    <td>$31.98</td>
+                
+                    <td>03/03/2024, 22:08</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-button" onclick="editOrder(1)">
+                                <div class="edit-icon">✏️</div>
+                            </button>
+                            <button class="action-button" onclick="deleteOrder(1)">
+                                <div class="delete-icon">🗑️</div>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Alma Malmberg</td>
+                    <td>To Kill a Mockingbird</td>
+                    <td>1</td>
+                    <td>$12.50</td>
+                   
+                    <td>25/01/2024, 18:57</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-button" onclick="editOrder(2)">
+                                <div class="edit-icon">✏️</div>
+                            </button>
+                            <button class="action-button" onclick="deleteOrder(2)">
+                                <div class="delete-icon">🗑️</div>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ivan Cornejo</td>
+                    <td>1984</td>
+                    <td>3</td>
+                    <td>$56.25</td>
+                 
+                    <td>24/11/2023, 0:19</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-button" onclick="editOrder(3)">
+                                <div class="edit-icon">✏️</div>
+                            </button>
+                            <button class="action-button" onclick="deleteOrder(3)">
+                                <div class="delete-icon">🗑️</div>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Add/Edit Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Add a New Customer Order</div>
+                <button class="close-button" onclick="closeModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="customer">Select Customer</label>
+                    <select id="customer" class="form-control">
+                        <option value="">-- Select a Customer --</option>
+                        <option value="1">Fatima Delgadillo</option>
+                        <option value="2">Alma Malmberg</option>
+                        <option value="3">Ivan Cornejo</option>
+                        <option value="4">Jane Doe</option>
+                        <option value="5">John Smith</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="book">Select Book</label>
+                    <select id="book" class="form-control" onchange="updatePrice()">
+                        <option value="">-- Select a Book --</option>
+                        <option value="1" data-price="15.99">The Great Gatsby - F. Scott Fitzgerald</option>
+                        <option value="2" data-price="12.50">To Kill a Mockingbird - Harper Lee</option>
+                        <option value="3" data-price="18.75">1984 - George Orwell</option>
+                        <option value="4" data-price="14.25">Pride and Prejudice - Jane Austen</option>
+                        <option value="5" data-price="22.99">The Catcher in the Rye - J.D. Salinger</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price Per Book</label>
+                    <input type="text" id="price" class="form-control" value="0.00" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <div class="quantity-control">
+                        <button type="button" class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="quantity" class="quantity-input" value="1" min="1" onchange="updateTotalPrice()">
+                        <button type="button" class="quantity-btn" onclick="increaseQuantity()">+</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">Order Status</label>
+                    <select id="status" class="form-control">
+                        <option value="ordered">Ordered</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="notified">Customer Notified</option>
+                        <option value="ready">Ready To Order</option>
+                    </select>
+                </div>
+                
+                <div class="price-display">
+                    Total Price: $<span id="totalPrice">0.00</span>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="saveOrder()">Submit</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
