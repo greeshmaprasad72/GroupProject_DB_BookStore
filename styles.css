@@ -66,6 +66,11 @@ body {
   margin-right: 12px;
   opacity: 0.8;
 }
+.menu-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 
 .main-content {
   flex: 1;

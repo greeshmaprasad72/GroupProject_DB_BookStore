@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookstore Template - Customers</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="header">
+          <div class="header-logo"></div>
+          <div>Bookstore Template</div>
+        </div>
+      
+        <a href="customer.html" class="menu-link">
+          <div class="menu-item active">
+            <div class="menu-icon">👤</div>
+            <div>Customers</div>
+          </div>
+        </a>
+      
+        <a href="order.html" class="menu-link">
+          <div class="menu-item">
+            <div class="menu-icon">📋</div>
+            <div>Customer Orders</div>
+          </div>
+        </a>
+      
+        <a href="book.html" class="menu-link">
+          <div class="menu-item">
+            <div class="menu-icon">📦</div>
+            <div>Book Details</div>
+          </div>
+        </a>
+    </div>
+
+  <div class="main-content">
+    <div class="info-banner">
+      <h1>Welcome To BookStore</h1>
+    </div>
+
+    <div class="content-header">
+      <div class="content-title">Customers</div>
+      <button class="add-button" onclick="openCustomerModal()">
+        <span class="add-icon">+</span>
+        Add
+      </button>
+    </div>
+
+    <table id="customerTable">
+      <thead>
+        <tr>
+          <th>Customer ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- customer rows will be inserted here dynamically -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div id="customerModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Add New Customer</div>
+        <button class="close-button" onclick="closeCustomerModal()">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" id="phone" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input type="text" id="street" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" id="city" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="postcode">Postcode</label>
+          <input type="text" id="postcode" class="form-control">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeCustomerModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveCustomer()">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="customer.js"></script>
+</body>
+</html>
