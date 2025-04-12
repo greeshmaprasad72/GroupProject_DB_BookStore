@@ -232,11 +232,12 @@ tr:hover {
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #2c2615;
   border-radius: 8px;
+
   width: 500px;
   max-width: 90%;
-  color: #333;
+  color: white;
 }
 
 .modal-header {
@@ -269,6 +270,7 @@ tr:hover {
 
 .form-group {
   margin-bottom: 16px;
+  
 }
 
 .form-group label {
@@ -280,7 +282,8 @@ tr:hover {
 .form-control {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
+  color: black;
   border-radius: 4px;
   box-sizing: border-box;
 }
