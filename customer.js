@@ -1,104 +1,113 @@
 let editingCustomerId = null;
 
+$(document).ready(function () {
+  loadCustomers();
+});
+
 function openCustomerModal() {
-  document.getElementById('customerModal').style.display = 'flex';
-  document.querySelector('.modal-title').textContent = "Add a New Customer";
+  $('#customerModal').css('display', 'flex');
+  $('.modal-title').text("Add a New Customer");
   clearCustomerForm();
 }
 
 function closeCustomerModal() {
-  document.getElementById('customerModal').style.display = 'none';
+  $('#customerModal').css('display', 'none');
   editingCustomerId = null;
 }
 
 function clearCustomerForm() {
-  document.getElementById('firstName').value = '';
-  document.getElementById('lastName').value = '';
-  document.getElementById('email').value = '';
-  document.getElementById('phone').value = '';
-  document.getElementById('street').value = '';
-  document.getElementById('city').value = '';
-  document.getElementById('postcode').value = '';
+  $('#firstName, #lastName, #email, #phone, #street, #city, #postcode').val('');
 }
 
-function generateCustomerID() {
-  return 'C' + Math.floor(Math.random() * 100000);
+function loadCustomers() {
+  $.get("customer_api.php", function (data) {
+    $('#customerTable tbody').empty();
+    data.forEach(c => {
+      const row = `
+        <tr data-id="${c.customer_id}">
+          <td>${c.customer_id}</td>
+          <td>${c.first_name} ${c.last_name}</td>
+          <td>${c.email}</td>
+          <td>${c.phone}</td>
+          <td>${c.address}, ${c.city}, ${c.postal_code}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="action-button" onclick="editCustomer('${c.customer_id}')">✏️</button>
+              <button class="action-button" onclick="deleteCustomer('${c.customer_id}')">🗑️</button>
+            </div>
+          </td>
+        </tr>`;
+      $('#customerTable tbody').append(row);
+    });
+  });
 }
 
 function saveCustomer() {
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName = document.getElementById('lastName').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const street = document.getElementById('street').value.trim();
-  const city = document.getElementById('city').value.trim();
-  const postcode = document.getElementById('postcode').value.trim();
+  const customer = {
+    customer_id: editingCustomerId,
+    first_name: $('#firstName').val().trim(),
+    last_name: $('#lastName').val().trim(),
+    email: $('#email').val().trim(),
+    phone: $('#phone').val().trim(),
+    address: $('#street').val().trim(),
+    city: $('#city').val().trim(),
+    postal_code: $('#postcode').val().trim()
+  };
 
-  if (!firstName || !lastName || !email || !phone || !street || !city || !postcode) {
+  if (!customer.first_name || !customer.last_name || !customer.email || !customer.address) {
     alert("Please fill all fields.");
     return;
   }
 
-  if (editingCustomerId) {
-    const row = document.querySelector(`tr[data-id="${editingCustomerId}"]`);
-    row.innerHTML = buildCustomerRowHTML(editingCustomerId, firstName, lastName, email, phone, street, city, postcode);
-    editingCustomerId = null;
-  } else {
-    const customerId = generateCustomerID();
-    const newRow = document.createElement('tr');
-    newRow.setAttribute('data-id', customerId);
-    newRow.innerHTML = buildCustomerRowHTML(customerId, firstName, lastName, email, phone, street, city, postcode);
-    document.querySelector('#customerTable tbody').appendChild(newRow);
-  }
-
-  closeCustomerModal();
-}
-
-function buildCustomerRowHTML(id, firstName, lastName, email, phone, street, city, postcode) {
-  return `
-    <td>${id}</td>
-    <td>${firstName} ${lastName}</td>
-    <td>${email}</td>
-    <td>${phone}</td>
-    <td>${street}, ${city}, ${postcode}</td>
-    <td>
-      <div class="action-buttons">
-        <button class="action-button" onclick="editCustomer('${id}')">
-          <div class="edit-icon">✏️</div>
-        </button>
-        <button class="action-button" onclick="deleteCustomer('${id}')">
-          <div class="delete-icon">🗑️</div>
-        </button>
-      </div>
-    </td>
-  `;
+  $.ajax({
+    url: 'customer_api.php',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(customer),
+    success: function (res) {
+      if (res.success) {
+        closeCustomerModal();
+        loadCustomers();
+      } else {
+        alert("Save failed: " + res.error);
+      }
+    }
+  });
 }
 
 function editCustomer(id) {
-  const row = document.querySelector(`tr[data-id="${id}"]`);
-  const cells = row.children;
+  const row = $(`tr[data-id="${id}"]`);
+  const cells = row.find('td');
 
-  const nameParts = cells[1].textContent.split(' ');
-  const [firstName, lastName] = nameParts;
+  const [firstName, lastName] = cells.eq(1).text().split(' ');
+  $('#firstName').val(firstName);
+  $('#lastName').val(lastName);
+  $('#email').val(cells.eq(2).text());
+  $('#phone').val(cells.eq(3).text());
 
-  document.getElementById('firstName').value = firstName;
-  document.getElementById('lastName').value = lastName;
-  document.getElementById('email').value = cells[2].textContent;
-  document.getElementById('phone').value = cells[3].textContent;
-
-  const addressParts = cells[4].textContent.split(',').map(s => s.trim());
-  document.getElementById('street').value = addressParts[0] || '';
-  document.getElementById('city').value = addressParts[1] || '';
-  document.getElementById('postcode').value = addressParts[2] || '';
+  const addressParts = cells.eq(4).text().split(',').map(s => s.trim());
+  $('#street').val(addressParts[0]);
+  $('#city').val(addressParts[1]);
+  $('#postcode').val(addressParts[2]);
 
   editingCustomerId = id;
-  document.querySelector('.modal-title').textContent = "Edit Customer";
-  document.getElementById('customerModal').style.display = 'flex';
+  $('.modal-title').text("Edit Customer");
+  $('#customerModal').css('display', 'flex');
 }
 
 function deleteCustomer(id) {
-  if (confirm("Are you sure you want to delete this customer?")) {
-    const row = document.querySelector(`tr[data-id="${id}"]`);
-    row.remove();
-  }
+  if (!confirm("Are you sure to delete this customer?")) return;
+
+  $.ajax({
+    url: 'customer_api.php',
+    method: 'DELETE',
+    data: { customer_id: id },
+    success: function (res) {
+      if (res.success) {
+        loadCustomers();
+      } else {
+        alert("Delete failed: " + res.error);
+      }
+    }
+  });
 }
