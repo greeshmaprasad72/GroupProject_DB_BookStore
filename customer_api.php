@@ -6,7 +6,7 @@ Dharanya Selvaraj - 8998287 -->
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$connection = new mysqli("localhost", "root", "", "bookstore");
+$connection = new mysqli("localhost", "root", "", "bookStore");
 header("Content-Type: application/json");
 
 if ($connection->connect_error) {

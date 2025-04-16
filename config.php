@@ -7,7 +7,7 @@ Dharanya Selvaraj - 8998287 -->
 define('DB_HOST', 'localhost:3307');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'Group4');
+define('DB_NAME', 'bookStore');
 
 function getConnection() {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
