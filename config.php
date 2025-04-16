@@ -1,3 +1,8 @@
+<!-- Group 4 
+Greeshma Prasad - 9042892 
+Arya Reghu - 8960917 
+Sitong Liu 8990939  
+Dharanya Selvaraj - 8998287 -->
 <?php
 define('DB_HOST', 'localhost:3307');
 define('DB_USER', 'root');
