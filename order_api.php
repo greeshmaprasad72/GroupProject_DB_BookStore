@@ -1,10 +1,11 @@
-<!-- Group 4 
-Greeshma Prasad - 9042892 
-Arya Reghu - 8960917 
-Sitong Liu 8990939  
-Dharanya Selvaraj - 8998287 -->
+
 
 <?php
+//  Group 4 
+//  Greeshma Prasad - 9042892 
+//  Arya Reghu - 8960917 
+//  Sitong Liu 8990939  
+//  Dharanya Selvaraj - 8998287  
 header('Content-Type: application/json');
 include 'config.php';
 
@@ -82,6 +83,10 @@ function saveOrder($conn) {
     $quantity = (int)$data['quantity'];
     $price = (float)$data['price'];
     $total_amount = $quantity * $price;
+    
+    // Generate invoice ID - THIS WAS MISSING
+    $invoice_id = generateInvoiceID($conn);
+
 
     
     $conn->begin_transaction();

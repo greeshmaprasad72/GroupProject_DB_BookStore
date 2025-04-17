@@ -1,11 +1,16 @@
 
 <?php
+//  Group 4 
+//  Greeshma Prasad - 9042892 
+//  Arya Reghu - 8960917 
+//  Sitong Liu 8990939  
+//  Dharanya Selvaraj - 8998287 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// $connection = new mysqli("localhost", "root", "", "group4");
+header('Content-Type: application/json');
 include 'config.php';
+
 $connection = getConnection();
-header("Content-Type: application/json");
 
 if ($connection->connect_error) {
     http_response_code(500);
@@ -66,7 +71,7 @@ switch ($method) {
             $sql = "INSERT INTO Customer (customer_id, first_name, last_name, email, phone, address, city, postal_code)
             VALUES ('$id', '$first', '$last', '$email', '$phone', '$address', '$city', '$postal')";
             if ($connection->query($sql)) {
-                $new_id = $connection->insert_id; // ✅ 获取新插入的 ID
+                $new_id = $connection->insert_id; // 获取新插入的 ID
                 echo json_encode(["success" => true, "customer_id" => $new_id]);
             } else {
                 echo json_encode(["success" => false, "error" => $connection->error]);

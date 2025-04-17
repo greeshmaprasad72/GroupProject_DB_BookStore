@@ -59,3 +59,28 @@ CREATE TABLE Invoice (
     total_amount DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE
 );
+
+
+INSERT INTO Customer (customer_id, first_name, last_name, email, phone, address, city, postal_code)
+VALUES 
+('C001', 'Alice', 'Johnson', 'alice.j@example.com', '123-456-7890', '123 Maple St', 'Springfield', '12345'),
+('C002', 'Bob', 'Smith', 'bob.smith@example.com', '987-654-3210', '456 Oak Ave', 'Rivertown', '67890');
+INSERT INTO Book (book_id, title, author, isbn, edition, publication_year, price, quantity_in_stock)
+VALUES 
+('B001', 'The Great Gatsby', 'F. Scott Fitzgerald', '9780743273565', '1st', 1925, 15.99, 10),
+('B002', '1984', 'George Orwell', '9780451524935', '1st', 1949, 12.99, 8),
+('B003', 'To Kill a Mockingbird', 'Harper Lee', '9780061120084', '2nd', 1960, 14.99, 5);
+INSERT INTO Orders (order_id, customer_id)
+VALUES 
+('O001', 'C001'),
+('O002', 'C002');
+INSERT INTO OrderDetails (order_detail_id, order_id, book_id, quantity, price_at_time_of_order)
+VALUES 
+('OD001', 'O001', 'B001', 1, 15.99),
+('OD002', 'O001', 'B002', 2, 12.99),
+('OD003', 'O002', 'B003', 1, 14.99);
+INSERT INTO Invoice (invoice_id, order_id, payment_status, payment_method, total_amount)
+VALUES 
+('I001', 'O001', 'Paid', 'Credit Card', 41.97), -- 15.99 + 2*12.99
+('I002', 'O002', 'Unpaid', 'PayPal', 14.99);
+
