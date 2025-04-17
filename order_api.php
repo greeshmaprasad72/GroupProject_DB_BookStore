@@ -83,6 +83,10 @@ function saveOrder($conn) {
     $quantity = (int)$data['quantity'];
     $price = (float)$data['price'];
     $total_amount = $quantity * $price;
+    
+    // Generate invoice ID - THIS WAS MISSING
+    $invoice_id = generateInvoiceID($conn);
+
 
     
     $conn->begin_transaction();
