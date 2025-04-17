@@ -9,7 +9,7 @@ function openModal() {
   loadCustomers();
   fetchBooks();
 }
-
+ 
 function closeModal() {
   document.getElementById('orderModal').style.display = 'none';
 }
@@ -58,6 +58,9 @@ function updateTotalPrice() {
   
   const totalPrice = price * quantity;
   totalPriceSpan.textContent = totalPrice.toFixed(2);
+}
+function downloadInvoicePDF(invoiceId) {
+  window.open(`generate_invoice_pdf.php?id=${invoiceId}`, '_blank');
 }
 
 function printOrderReceipt(orderId) {

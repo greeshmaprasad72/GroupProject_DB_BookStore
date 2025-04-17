@@ -1,0 +1,96 @@
+<!-- Group 4 
+Greeshma Prasad - 9042892 
+Arya Reghu - 8960917 
+Sitong Liu 8990939  
+Dharanya Selvaraj - 8998287 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookholics</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="header">
+          <div class="header-logo"></div>
+          <div>Bookholics</div>
+        </div>
+      
+        <a href="customer.html" class="menu-link">
+          <div class="menu-item active">
+            <div class="menu-icon">👤</div>
+            <div>Customers</div>
+          </div>
+        </a>
+      
+        <a href="order.html" class="menu-link">
+          <div class="menu-item">
+            <div class="menu-icon">📋</div>
+            <div>Customer Orders</div>
+          </div>
+        </a>
+      
+        <a href="book.html" class="menu-link">
+          <div class="menu-item">
+            <div class="menu-icon">📦</div>
+            <div>Book Details</div>
+          </div>
+        </a>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Welcome To Bookholics</h1>
+        </div>
+        <div class="content">
+            <div class="content-header">
+                <h2>Book Details</h2>
+                <button class="add-button">
+                    <span>+</span> Add
+                </button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        
+                        <th>Book Name</th>
+                        <th>Author</th>
+                        <th>Price</th>
+                        <th>ISBN</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bookTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">Add New Book</h3>
+            <button class="close-button" onclick="closeBookModal()">×</button>
+          </div>
+          <div class="modal-body">
+            <form id="bookForm">
+              <input type="hidden" id="book_id">
+      
+              <div class="form-group"><label>Title</label><input type="text" id="title" class="form-control" required></div>
+              <div class="form-group"><label>Author</label><input type="text" id="author" class="form-control" required></div>
+              <div class="form-group"><label>ISBN</label><input type="text" id="isbn" class="form-control" required></div>
+              <div class="form-group"><label>Edition</label><input type="text" id="edition" class="form-control" required></div>
+              <div class="form-group"><label>Publication Year</label><input type="number" id="year" class="form-control" required></div>
+              <div class="form-group"><label>Price</label><input type="number" step="0.01" id="price" class="form-control" required></div>
+              <div class="form-group"><label>Quantity</label><input type="number" id="quantity" class="form-control" required></div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeBookModal()">Cancel</button>
+            <button class="btn-primary" onclick="saveBook()">Save</button>
+          </div>
+        </div>
+      </div>
+      
+    <script src="book.js"></script>
+</body>
+</html>

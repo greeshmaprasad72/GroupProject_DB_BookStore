@@ -41,7 +41,7 @@ function getOrders($conn) {
 
 
 function getCustomers($conn) {
-    $sql = "SELECT customer_id, CONCAT(first_name, ' ', last_name) AS full_name FROM Customer ORDER BY first_name";
+    $sql = "SELECT customer_id, CONCAT(first_name, ' ', last_name) AS full_name FROM customer ORDER BY first_name";
     $result = $conn->query($sql);
     $customers = [];
     while ($row = $result->fetch_assoc()) {
