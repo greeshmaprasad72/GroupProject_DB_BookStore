@@ -71,7 +71,7 @@ switch ($method) {
             $sql = "INSERT INTO Customer (customer_id, first_name, last_name, email, phone, address, city, postal_code)
             VALUES ('$id', '$first', '$last', '$email', '$phone', '$address', '$city', '$postal')";
             if ($connection->query($sql)) {
-                $new_id = $connection->insert_id; // ✅ 获取新插入的 ID
+                $new_id = $connection->insert_id; // 获取新插入的 ID
                 echo json_encode(["success" => true, "customer_id" => $new_id]);
             } else {
                 echo json_encode(["success" => false, "error" => $connection->error]);
